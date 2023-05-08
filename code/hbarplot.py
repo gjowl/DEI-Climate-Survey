@@ -28,9 +28,14 @@ def getColumnCountUniqueValues(df, col):
 def getAnswerCountDf(answer_counts, answers):
     # convert the answer count index to a list
     unique_values = answer_counts.index.tolist()
+    # get the smallest value in the unique values list; for some reason the survey center defined some answers with higher numbers than others, so this combats that
+    smallest_value = min(unique_values)
+    # convert smallest value to an integer
+    smallest_value = int(smallest_value)
+    print(unique_values)
     # replace the index of each unique value with its corresponding answer
     for i, value in enumerate(unique_values):
-        unique_values[i] = answers[int(value)-1]
+        unique_values[i] = answers[int(value)-smallest_value]
     # check if there are any values that are not in the answers
     if len(unique_values) != len(answers):
         # add the missing values to the unique values with a count of 0
@@ -46,8 +51,15 @@ def getAnswerCountDf(answer_counts, answers):
 data_file = sys.argv[1]
 answer_file = sys.argv[2]
 
+# define the output directory
+output_dir = 'Questions'
+
+# make the output directory if it doesn't exist
+os.makedirs(output_dir, exist_ok=True)
+
 # read in the data file as a pandas dataframe with all columns as integers
 df_data = pd.read_csv(data_file, sep=',', header=0)
+# read in the answer file as a pandas dataframe
 df_answers = pd.read_csv(answer_file, sep=',', header=0)
 
 # split columns
@@ -84,14 +96,11 @@ for q, a in zip(df_answers['Question'], df_answers['Answer']):
             plt.xlabel("Response count")
             # plot the bar histogram for response vs count
             plt.barh(df_count['answer'], df_count['count'], color = 'teal')
-            plt.savefig(f'{q}.png', bbox_inches="tight")
-            exit(0)
+            plt.savefig(f'{output_dir}/{q}.png', bbox_inches="tight")
+            plt.clf()
+            print(q)
 
-
-    # get the answer from the answer column
-    col = 'Q' + str(q) + '_ANSWER'
-
-
+exit(0)
 t1 = ["Extremely committed", "Very committed", "Somewhat committed", "Not at all committed"]
 t2 = ["Extremely important", "Very important", "Moderately important", "Slightly important", "Not at all important"]
 t3 = ["Extremely often", "Very often", "Sometimes", "Rarely", "Never"]
