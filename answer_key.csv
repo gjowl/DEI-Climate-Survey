@@ -1,0 +1,49 @@
+Question,Answer
+Q1,Extremely Committed|Committed|Somewhat Committed|Not Committed|Not Committed At All
+Q2,Not at all important|Not important|Somewhat important|Important|Extremely important
+Q3,Extremely often|Very Often|Sometimes|Rarely|Never
+Q4,Extremely often|Very Often|Sometimes|Rarely|Never
+Q5,Strongly Agree|Agree|Neutral|Disagree|Strongly Disagree
+Q8,Strongly Agree|Agree|Neutral|Disagree|Strongly Disagree
+Q9,A supervisor|A colleague or peer|A non-supervisory faculty member|Other
+Q10,Strongly Agree|Agree|Neutral|Disagree|Strongly Disagree
+Q11,Strongly Agree|Agree|Neutral|Disagree|Strongly Disagree
+Q15,Yes|Maybe|I don't know|No
+Q16,I have all the information I need about this|I have heard about some resources but do not know how to engage with them|I totally lack information about this
+Q17,I have all the information I need about this|I have heard about some resources but do not know how to engage with them|I totally lack information about this
+Q18,I have all the information I need about this|I have heard about some resources but do not know how to engage with them|I totally lack information about this
+Q20.0,Yes very much so|Yes somewhat|Nuetral|No I don't think so|No not at all
+Q21,Extremely often(>5 times)|Very Often(4 times)|Sometimes(2-3 times)|Rarely(once)|Never(0 times)
+Q25,Yes very much so|Yes somewhat|Nuetral|No I don't think so|No not at all
+Q26,Extremely often(>5 times)|Very Often(4 times)|Sometimes(2-3 times)|Rarely(once)|Never(0 times)
+Q30,Yes more than once|Yes once|No|Not sure
+Q34,Yes more than once|Yes once|No|Not sure
+Q38,Yes|No|I don't know
+Q40,Yes|No
+Q41,Yes|No
+Q42,Yes|No
+Q43,Yes|No
+Q44,Yes|No
+Q45,Yes|No
+Q46,Yes|No
+Q52,Yes repeatedly|Yes occasionally|No not really|No never
+Q53,Yes repeatedly|Yes occasionally|No not really|No never
+Q54,Yes very much so|Yes somewhat|No not really|No not at all
+Q56,Yes|No|Not applicable
+Q58,Undergraduate student|Pre-dissertator|Dissertator|Post-doc|Faculty trainer|Research staff|Teaching staff|Administrative staff|Other
+Q61,Yes|No|Prefer not to say
+Q62,Yes|No|Prefer not to say
+Q63,Yes|No|Prefer not to say
+Q64,Yes|No|Prefer not to say
+Q65,Yes very much so|Yes somewhat|Neutral|No not really|No not at all
+Q22_,Race or ethnicity|Sexual orientation|Gender identity|Age|Disability|Religion or belief systems|Political ideology|Socioeconomic status|Language or accent|National origin|Not related to personal identity|Unsure|Other|Sex
+Q23_,Faculty trainer in IPiB|Faculty outside of IPiB|Student in IPiB|Student outside of IPiB|Staff|Post-doc|Other
+Q27_,Race or ethnicity|Sex|Sexual orientation|Gender identity|Age|Disability|Religion or belief systems|Political ideology|Socioeconomic status|Language or accent|National origin|Not related to personal identity|Unsure|Other
+Q28_,Faculty trainer in IPiB|Faculty outside of IPiB|Student in IPiB|Student outside of IPiB|Staff|Post-doc|Other
+Q31_,Race or ethnicity|Sex|Sexual orientation|Gender identity|Age|Disability|Religion or belief systems|Political ideology|Socioeconomic status|Language or accent|National origin|Not related to personal identity|Unsure|Other
+Q32_,Faculty trainer in IPiB|Faculty outside of IPiB|Student in IPiB|Student outside of IPiB|Staff|Post-doc|Other
+Q35_,Race or ethnicity|Sex|Sexual orientation|Gender identity|Age|Disability|Religion or belief systems|Political ideology|Socioeconomic status|Language or accent|National origin|Not related to personal identity|Unsure|Other
+Q36_,Faculty trainer in IPiB|Faculty outside of IPiB|Student in IPiB|Student outside of IPiB|Staff|Post-doc|Other
+Q13_,Very Positive|Somewhat Positive|Ambivalent|Slightly Negative|Very Negative|Individuals who do not fit
+Q14_,Very Positive|Somewhat Positive|Ambivalent|Slightly Negative|Very Negative|Individuals who do not fit
+Q39_,Women|Lesbian gay bisexual queer pansexual asexual|Transgender or genderqueer|Underrepresented racial or ethnic groups|Individuals with strong religious beliefs|Individuals from underrepresented religious groups|Individuals from financially disadvantaged backgrounds|Individuals with physical disabilities|Individuals with learning disabilities|Individuals with mental illnesses|Individuals with conservative political beliefs|Other|International students and postdocs|Individuals with liberal political beliefs|Individuals who are neurodivergent or nonneurotypical
