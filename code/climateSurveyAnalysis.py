@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*-coding:utf-8 -*-
 '''
-@File    :   hbarplot.py
+@File    :   climateSurveyAnalysis.py
 @Time    :   2023/05/05 19:48:51
 @Author  :   Gilbert Loiseau 
 @Version :   1.0
@@ -9,10 +9,10 @@
 @License :   (C)Copyright 2023, Gilbert Loiseau
 @Desc    :   Version of hbarplot for the IPiB survey based on John Ahn's code
 
-Usage: python3 hbarplot.py <data_file> <answer_file>
+Usage: python3 climateSurveyAnalysis.py <data_file> <answer_file>
 
 This script takes in a csv file with the survey data and a csv file with the questions and answers, and
-outputs a bar plot for each question with the answers on the x axis and the count on the y axis.
+outputs a bar plot for each question with the answers on the y axis and the count on the x axis.
 The bar plots are saved in a directory called Questions within the current working directory. 
 
 TODO: The script also outputs a csv file with
