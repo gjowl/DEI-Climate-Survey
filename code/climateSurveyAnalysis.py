@@ -55,6 +55,10 @@ def getAnswerCountDf(answer_counts, answers):
     answer_counts = answer_counts.sort_index()
     # convert the answer count index to a list
     unique_values = answer_counts.index.tolist()
+    # check the length of the unique values list; if 0, then there are no answers for the question
+    if len(unique_values) == 0:
+        # return an empty dataframe
+        return pd.DataFrame({'answer': [], 'count': []})
     # get the smallest value in the unique values list; for some reason the survey center defined some answers with higher numbers than others, so this combats that
     smallest_value = int(min(unique_values))
     # replace the index of each unique value with its corresponding answer
@@ -79,6 +83,16 @@ def plotAverageBarGraph(df, question_number, output_dir):
     plt.savefig(f'{output_dir}/{question_number}.png', bbox_inches="tight")
     plt.clf()
 
+# plot the percent bar graph for any total count based questions
+def plotPercentBarGraph(df, question_number, output_dir):
+    s = int(df['count'].sum())
+    df['count'] = df['count'].apply(lambda x: x/s*100)
+    plt.title(f'{question_number}, n={s}', fontsize = 10)
+    plt.xlabel("Percent")
+    plt.barh(df['answer'], df['count'], color = 'teal')
+    plt.savefig(f'{output_dir}/{question_number}.png', bbox_inches="tight")
+    plt.clf()
+
 # plot the bar graph for any total count based questions
 def plotBarGraph(df, question_number, output_dir):
     s = int(df['count'].sum())
@@ -99,25 +113,11 @@ def getAnswerAverage(df):
     averages.index = averages.index + 1
     return averages
 
-if __name__ == '__main__':
-    # read in the command line options
-    data_file = sys.argv[1]
-    answer_file = sys.argv[2]
-
-    # define the output directory and make it if it doesn't exist
-    output_dir = 'Questions'
-    os.makedirs(output_dir, exist_ok=True)
-
-    # read in the data file as a pandas dataframe with all columns as integers
-    df_data = pd.read_csv(data_file, sep=',', header=0)
-    # remove any columns that contain 'TEXT'; this only analyzes the multiple choice questions
-    df_data = df_data.loc[:, ~df_data.columns.str.contains('TEXT')]
-    # read in the answer file as a pandas dataframe
-    df_answers = pd.read_csv(answer_file, sep=',', header=0)
-
+# driver function for the analysis
+def analyzeAndPlotGraphs(df_data, df_answers, output_dir):
     # loop through the questions and answers
     for q, a in zip(df_answers['Question'], df_answers['Answer']):
-        # separate a into a list of answers by the pipe as delimiter
+        # separate a (answers column) into a list by the pipe as delimiter
         answers = a.split('|')
         # check if the question is question 13 or 14
         if q == 'Q13_' or q == 'Q14_':
@@ -138,21 +138,51 @@ if __name__ == '__main__':
                 col_num = col.split('_')[1]
                 # get the question from the answer file by the column number
                 label = f'Q39_{answers[int(col_num)-1]}'
-                plotBarGraph(df_count, label, output_dir)
+                plotPercentBarGraph(df_count, label, output_dir)
         else:
             # count the answers for the given question
             answer_counts = countAnswers(df_data, q, answers)
             df_count = getAnswerCountDf(answer_counts, answers)
-            plotBarGraph(df_count, q, output_dir)
+            plotPercentBarGraph(df_count, q, output_dir)
+
+if __name__ == '__main__':
+    # read in the command line options
+    data_file = sys.argv[1]
+    answer_file = sys.argv[2]
+
+    # define the output directory and make it if it doesn't exist
+    output_dir = 'Questions_Percents'
+    os.makedirs(output_dir, exist_ok=True)
+
+    # read in the data file as a pandas dataframe with all columns as integers
+    df_data = pd.read_csv(data_file, sep=',', header=0)
+    # remove any columns that contain 'TEXT'; this only analyzes the multiple choice questions
+    df_data = df_data.loc[:, ~df_data.columns.str.contains('TEXT')]
+    # read in the answer file as a pandas dataframe
+    df_answers = pd.read_csv(answer_file, sep=',', header=0)
+
+    # analyze and plot the graphs
+    analyzeAndPlotGraphs(df_data, df_answers, output_dir)
+
+    # define the student answers
+    df_students = df_data[df_data['Q93'] == 1]
+    # LGBTQ+ students
+    df_lgbtq = df_students[df_students['Q61'] == 1]
+    # marginalized members of community
+    df_marginalized = df_students[df_students['Q62'] == 1]
+    # define the non-student answers
+    df_staff = df_data[df_data['Q93'] != 1]
+
+    # create a list of the dataframes to loop through
+    df_list = [df_students, df_staff, df_marginalized, df_lgbtq]
+    # create a list of the output directories to loop through
+    output_dir_list = ['Students', 'Staff', 'Marginalized', 'LGBTQ+'] 
+    # loop through the dataframes and output directories
+    for df, out_dir in zip(df_list, output_dir_list):
+        # define the output directory and make it if it doesn't exist
+        out_dir = f'{output_dir}/{out_dir}'
+        os.makedirs(out_dir, exist_ok=True)
+        # analyze and plot the graphs
+        analyzeAndPlotGraphs(df, df_answers, out_dir)
     
-    # split columns
-    split_col = ['Q60', 'Q61']
-    # separate the data by the given columns
-    #for col in split_col:
-    #    split_data = getColumnCountUniqueValues(df_data, col)
-    #    # rid of any indices with less than 5 counts
-    #    split_data = split_data[split_data > 5]
-    #    # keep the data that matches the indices of the split data
-    #    df_data = df_data[df_data[col].isin(split_data.index)]
-    #    # can from here analyze the data for each individual split
-    #    # TODO: add in the analysis part here
+    # currently works and writes all graphs; would be great in the future to write something to compare the results of the different groups
