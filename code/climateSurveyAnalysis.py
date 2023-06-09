@@ -207,7 +207,7 @@ def analyzeAndPlotComparisonGraphs(df_allData, df_list, df_answers, question_lis
                 df_question_all = df_allData.filter(regex=q)
                 df_question_rest = rest_of_data.filter(regex=q)
                 # hardcoding the list of answers for this question here
-                q39_answers = ['Strongly disagree','Disagree','Neither agree nor disagree','Somewhat agree','Strongly agree','I do not know']
+                q39_answers = ['Strongly disagree','Disagree','Neutral','Somewhat agree','Strongly agree','I do not know']
                 # loop through the columns and get the counts for each answer
                 for col in df_question.columns:
                     # count the answers for the given question
