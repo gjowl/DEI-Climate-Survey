@@ -257,12 +257,12 @@ if __name__ == '__main__':
     # define the separated groups of answers (hardcoded); if question numbers change in future surveys, will need to change these
     df_students = df_data[df_data['Q93'] == 1]
     df_staff = df_data[df_data['Q93'] != 1]
-    df_marginalized = df_students[df_students['Q62'] == 1]
-    df_lgbtq = df_students[df_students['Q61'] == 1]
-    df_first_gen = df_students[df_students['Q63'] == 1]
-    df_international = df_students[df_students['Q64'] == 1]
-    df_male = df_students[df_students['Q60'] == 'Male']
-    df_female = df_students[df_students['Q60'] == 'Female']
+    df_marginalized = df_data[df_data['Q62'] == 1]
+    df_lgbtq = df_data[df_data['Q61'] == 1]
+    df_first_gen = df_data[df_data['Q63'] == 1]
+    df_international = df_data[df_data['Q64'] == 1]
+    df_male = df_data[df_data['Q60'] == 'Male']
+    df_female = df_data[df_data['Q60'] == 'Female']
 
     # create a list of the dataframes to loop through
     df_list = [df_students, df_staff, df_marginalized, df_lgbtq, df_first_gen, df_international, df_male, df_female]
