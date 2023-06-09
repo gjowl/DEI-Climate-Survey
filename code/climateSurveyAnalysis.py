@@ -164,16 +164,19 @@ def plotComparisonBarGraph(df_count, df_other_count, question_number, label1, la
     # get the sum of the counts for each dataframe
     s = int(df_count['count'].sum())
     s_other = int(df_other_count['count'].sum())
+    # make copies of the dataframes
+    df_1 = df_count.copy()
+    df_2 = df_other_count.copy()
     # get the percentage of each answer for each dataframe
-    df_count['count'] = df_count['count'].apply(lambda x: x/s*100)
-    df_other_count['count'] = df_other_count['count'].apply(lambda x: x/s_other*100)
+    df_1['count'] = df_1['count'].apply(lambda x: x/s*100)
+    df_2['count'] = df_2['count'].apply(lambda x: x/s_other*100)
     plt.ylim(0,100)
     plt.xticks(rotation=45)
     plt.title(f'{question_number}, {label1}={s}, {label2}={s_other}', fontsize = 10)
     plt.ylabel("Percent")
     bar_width = 0.4
-    plt.bar(df_count['answer'], df_count['count'], color = color1, label=label1, width=-bar_width, align = 'edge')
-    plt.bar(df_other_count['answer'], df_other_count['count'], color = color2, label=label2, width=bar_width, align = 'edge')
+    plt.bar(df_1['answer'], df_1['count'], color = color1, label=label1, width=-bar_width, align = 'edge')
+    plt.bar(df_2['answer'], df_2['count'], color = color2, label=label2, width=bar_width, align = 'edge')
     plt.legend()
     plt.savefig(f'{output_dir}/{label1}_{label2}.png', bbox_inches="tight")
     plt.clf()
@@ -262,7 +265,7 @@ if __name__ == '__main__':
     df_female = df_students[df_students['Q60'] == 'Female']
 
     # create a list of the dataframes to loop through
-    df_list = [df_students, df_staff, df_marginalized, df_lgbtq]
+    df_list = [df_students, df_staff, df_marginalized, df_lgbtq, df_first_gen, df_international, df_male, df_female]
     # create a list of the output directories to loop through
     output_list = ['Students', 'Staff', 'Marginalized', 'LGBTQ+', 'First Generation College', 'International', 'Male', 'Female'] 
     group_compare_question = ['Q4', 'Q5', 'Q8', 'Q9', 'Q10', 'Q11', 'Q20', 'Q21', 'Q30', 'Q56', 'Q39']
