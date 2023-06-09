@@ -1,5 +1,5 @@
 Question,Answer
-Q1,Extremely Committed|Committed|Somewhat Committed|Not Committed|Not Committed At All
+Q1,Extremely Committed|Very Committed|Somewhat Committed|Not at all committed
 Q2,Not at all important|Not important|Somewhat important|Important|Extremely important
 Q3,Extremely often|Very Often|Sometimes|Rarely|Never
 Q4,Extremely often|Very Often|Sometimes|Rarely|Never
@@ -12,9 +12,9 @@ Q15,Yes|Maybe|I don't know|No
 Q16,I have all the information I need about this|I have heard about some resources but do not know how to engage with them|I totally lack information about this
 Q17,I have all the information I need about this|I have heard about some resources but do not know how to engage with them|I totally lack information about this
 Q18,I have all the information I need about this|I have heard about some resources but do not know how to engage with them|I totally lack information about this
-Q20.0,Yes very much so|Yes somewhat|Nuetral|No I don't think so|No not at all
+Q20.0,Yes very much so|Yes somewhat|Neutral|No I don't think so|No not at all
 Q21,Extremely often(>5 times)|Very Often(4 times)|Sometimes(2-3 times)|Rarely(once)|Never(0 times)
-Q25,Yes very much so|Yes somewhat|Nuetral|No I don't think so|No not at all
+Q25,Yes very much so|Yes somewhat|Neutral|No I don't think so|No not at all
 Q26,Extremely often(>5 times)|Very Often(4 times)|Sometimes(2-3 times)|Rarely(once)|Never(0 times)
 Q30,Yes more than once|Yes once|No|Not sure
 Q34,Yes more than once|Yes once|No|Not sure
