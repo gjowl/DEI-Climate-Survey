@@ -268,7 +268,7 @@ if __name__ == '__main__':
     df_list = [df_students, df_staff, df_marginalized, df_lgbtq, df_first_gen, df_international, df_male, df_female]
     # create a list of the output directories to loop through
     output_list = ['Students', 'Staff', 'Marginalized', 'LGBTQ+', 'First Generation College', 'International', 'Male', 'Female'] 
-    group_compare_question = ['Q4', 'Q5', 'Q8', 'Q9', 'Q10', 'Q11', 'Q20', 'Q21', 'Q30', 'Q56', 'Q39']
+    group_compare_question = ['Q4', 'Q5', 'Q8', 'Q9', 'Q10', 'Q11', 'Q20.0', 'Q21', 'Q30', 'Q56', 'Q39']
 
     # analyze and plot the graphs for
     analyzeAndPlotComparisonGraphs(df_data, df_list, df_answers, group_compare_question, output_list, output_dir)
