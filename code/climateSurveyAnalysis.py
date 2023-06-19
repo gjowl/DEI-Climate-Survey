@@ -289,7 +289,7 @@ if __name__ == '__main__':
     df_data['Q58'] = df_data['Q58'].astype(int)
 
     # keep only the rows that have a value of 5, 6, 7, 8, or 9 in the Q58 column
-    df_staff = df_data[df_data['Q58'].isin([5,6,7,8,9])]
+    df_staff = df_data[df_data['Q58'].isin([6,7,9])]
     df_faculty = df_data[df_data['Q58'].isin([5])]
     # print the number of staff members
     df_marginalized = df_data[df_data['Q62'] == 1]
