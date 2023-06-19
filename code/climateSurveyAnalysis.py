@@ -290,8 +290,8 @@ if __name__ == '__main__':
 
     # keep only the rows that have a value of 5, 6, 7, 8, or 9 in the Q58 column
     df_staff = df_data[df_data['Q58'].isin([5,6,7,8,9])]
+    df_faculty = df_data[df_data['Q58'].isin([5])]
     # print the number of staff members
-    print(len(df_staff))
     df_marginalized = df_data[df_data['Q62'] == 1]
     df_lgbtq = df_data[df_data['Q61'] == 1]
     df_first_gen = df_data[df_data['Q63'] == 1]
@@ -300,9 +300,9 @@ if __name__ == '__main__':
     df_female = df_data[df_data['Q60'] == 'Female']
 
     # create a list of the dataframes to loop through
-    df_list = [df_students, df_staff, df_marginalized, df_lgbtq, df_first_gen, df_international, df_male, df_female]
+    df_list = [df_students, df_staff, df_faculty, df_marginalized, df_lgbtq, df_first_gen, df_international, df_male, df_female]
     # create a list of the output directories to loop through
-    output_list = ['Students', 'Staff', 'Marginalized', 'LGBTQ+', 'First Generation College', 'International', 'Male', 'Female'] 
+    output_list = ['Students', 'Staff', 'Faculty', 'Marginalized', 'LGBTQ+', 'First Generation College', 'International', 'Male', 'Female'] 
     group_compare_question = ['Q4', 'Q5', 'Q8', 'Q9', 'Q10', 'Q11', 'Q20.0', 'Q21', 'Q30', 'Q56', 'Q39']
 
     # analyze and plot the graphs for comparison between above groups
