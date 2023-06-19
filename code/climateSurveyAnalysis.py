@@ -164,12 +164,38 @@ def plotComparisonBarGraph(df_count, df_other_count, question_number, label1, la
     # get the sum of the counts for each dataframe
     s = int(df_count['count'].sum())
     s_other = int(df_other_count['count'].sum())
-    # make copies of the dataframes
+    # make copies of the dataframes before transforming the counts to percentages
     df_1 = df_count.copy()
     df_2 = df_other_count.copy()
     # get the percentage of each answer for each dataframe
     df_1['count'] = df_1['count'].apply(lambda x: x/s*100)
     df_2['count'] = df_2['count'].apply(lambda x: x/s_other*100)
+    plt.ylim(0,100)
+    plt.xticks(rotation=45)
+    plt.title(f'{question_number}, {label1}={s}, {label2}={s_other}', fontsize = 10)
+    plt.ylabel("Percent")
+    bar_width = 0.4
+    plt.bar(df_1['answer'], df_1['count'], color = color1, label=label1, width=-bar_width, align = 'edge')
+    plt.bar(df_2['answer'], df_2['count'], color = color2, label=label2, width=bar_width, align = 'edge')
+    plt.legend()
+    plt.savefig(f'{output_dir}/{label1}_{label2}.png', bbox_inches="tight")
+    plt.clf()
+
+# question 39 is so different that it needs a separate function ... 
+def plotComparisonBarGraph39(df_count, df_other_count, question_number, label1, label2, color1, color2, answer_order, output_dir):
+    # plot bar graph vertically of df_count and df_all_count
+    # get the sum of the counts for each dataframe
+    s = int(df_count['count'].sum())
+    s_other = int(df_other_count['count'].sum())
+    # make copies of the dataframes before transforming the counts to percentages
+    df_1 = df_count.copy()
+    df_2 = df_other_count.copy()
+    # get the percentage of each answer for each dataframe
+    df_1['count'] = df_1['count'].apply(lambda x: x/s*100)
+    df_2['count'] = df_2['count'].apply(lambda x: x/s_other*100)
+
+    # set the index to the answer order (for some reason for a couple categories for question 39 this was not in the correct order, so forcing it here)
+    df_1 = df_1.set_index('answer').reindex(answer_order).reset_index() 
     plt.ylim(0,100)
     plt.xticks(rotation=45)
     plt.title(f'{question_number}, {label1}={s}, {label2}={s_other}', fontsize = 10)
@@ -206,6 +232,7 @@ def analyzeAndPlotComparisonGraphs(df_allData, df_list, df_answers, question_lis
                 plotComparisonBarGraph(df_count, df_all_count, q, output, 'All', group_comparison_color, default_color, out_dir)
                 plotComparisonBarGraph(df_count, df_rest_count, q, output, 'Rest', group_comparison_color, other_color, out_dir)
             elif q == 'Q39_':
+                # kind of a gross way for how I was able to write this for question 39s many groupings
                 df_question = df_data.filter(regex=q)
                 df_question_all = df_allData.filter(regex=q)
                 df_question_rest = rest_of_data.filter(regex=q)
@@ -230,8 +257,8 @@ def analyzeAndPlotComparisonGraphs(df_allData, df_list, df_answers, question_lis
                     out_dir = f'{output_dir}/{label}'
                     os.makedirs(out_dir, exist_ok=True)
                     # plot the bar graphs
-                    plotComparisonBarGraph(df_count, df_all_count, question_label, output, 'All', group_comparison_color, default_color, out_dir)
-                    plotComparisonBarGraph(df_count, df_rest_count, question_label, output, 'Rest', group_comparison_color, other_color, out_dir)
+                    plotComparisonBarGraph39(df_count, df_all_count, question_label, output, 'All', group_comparison_color, default_color, q39_answers, out_dir)
+                    plotComparisonBarGraph39(df_count, df_rest_count, question_label, output, 'Rest', group_comparison_color, other_color, q39_answers, out_dir)
                     
 
 if __name__ == '__main__':
@@ -251,12 +278,20 @@ if __name__ == '__main__':
     # read in the answer file as a pandas dataframe
     df_answers = pd.read_csv(answer_file, sep=',', header=0)
 
-    # analyze and plot the graphs
+    # analyze and plot the graphs for each individual question of the data
     #analyzeAndPlotGraphs(df_data, df_answers, output_dir)
 
     # define the separated groups of answers (hardcoded); if question numbers change in future surveys, will need to change these
     df_students = df_data[df_data['Q93'] == 1]
-    df_staff = df_data[df_data['Q93'] != 1]
+
+    # convert the Q58 column to integers and rid of NaN values
+    df_data['Q58'] = df_data['Q58'].fillna(0)
+    df_data['Q58'] = df_data['Q58'].astype(int)
+
+    # keep only the rows that have a value of 5, 6, 7, 8, or 9 in the Q58 column
+    df_staff = df_data[df_data['Q58'].isin([5,6,7,8,9])]
+    # print the number of staff members
+    print(len(df_staff))
     df_marginalized = df_data[df_data['Q62'] == 1]
     df_lgbtq = df_data[df_data['Q61'] == 1]
     df_first_gen = df_data[df_data['Q63'] == 1]
@@ -270,7 +305,7 @@ if __name__ == '__main__':
     output_list = ['Students', 'Staff', 'Marginalized', 'LGBTQ+', 'First Generation College', 'International', 'Male', 'Female'] 
     group_compare_question = ['Q4', 'Q5', 'Q8', 'Q9', 'Q10', 'Q11', 'Q20.0', 'Q21', 'Q30', 'Q56', 'Q39']
 
-    # analyze and plot the graphs for
+    # analyze and plot the graphs for comparison between above groups
     analyzeAndPlotComparisonGraphs(df_data, df_list, df_answers, group_compare_question, output_list, output_dir)
 
     # get the data not found within df_students
