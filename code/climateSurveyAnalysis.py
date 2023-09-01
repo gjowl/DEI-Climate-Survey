@@ -47,7 +47,7 @@ if __name__ == '__main__':
   df_answers = pd.read_csv(answer_file, sep=',', header=0)
   
   # analyze and plot the graphs for each individual question of the data
-  analyzeAndPlotGraphs(df_data, df_answers, output_dir, percent=True)
+  #analyzeAndPlotGraphs(df_data, df_answers, output_dir, percent=True)
   
   # define the separated groups of answers (hardcoded); if question numbers change in future surveys, will need to change these
   df_students = df_data[df_data['Q93'] == 1]
@@ -76,7 +76,10 @@ if __name__ == '__main__':
   group_compare_question = ['Q4', 'Q5', 'Q8', 'Q9', 'Q10', 'Q11', 'Q20.0', 'Q21', 'Q30', 'Q56', 'Q39']
   
   # analyze and plot the graphs for comparison between above groups
-  analyzeAndPlotComparisonGraphs(df_data, df_list, df_answers, group_compare_question, output_list, output_dir)
+  #analyzeAndPlotComparisonGraphs(df_data, df_list, df_answers, group_compare_question, output_list, output_dir)
   
   # get the data not found within df_students
   rest_of_data = df_data[~df_data.isin(df_students)].dropna()
+
+  # plot female vs male graphs
+  plotFemaleVsMale(df_female, df_male, df_answers, group_compare_question, output_list, output_dir)

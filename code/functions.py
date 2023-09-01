@@ -190,7 +190,7 @@ def analyzeAndPlotComparisonGraphs(df_allData, df_list, df_answers, question_lis
                 df_count = getAnswerCountDf(answer_counts, answers)
                 df_all_count = getAnswerCountDf(all_data_counts, answers)
                 df_rest_count = getAnswerCountDf(rest_counts, answers)
-                # plot the bar graphs
+                # plot the bar graphs first against all data, then against the rest of the data
                 plotComparisonBarGraph(df_count, df_all_count, q, output, 'All', group_comparison_color, default_color, out_dir)
                 plotComparisonBarGraph(df_count, df_rest_count, q, output, 'Rest', group_comparison_color, other_color, out_dir)
             elif q == 'Q39_':
@@ -221,4 +221,48 @@ def analyzeAndPlotComparisonGraphs(df_allData, df_list, df_answers, question_lis
                     # plot the bar graphs
                     plotComparisonBarGraph39(df_count, df_all_count, question_label, output, 'All', group_comparison_color, default_color, q39_answers, out_dir)
                     plotComparisonBarGraph39(df_count, df_rest_count, question_label, output, 'Rest', group_comparison_color, other_color, q39_answers, out_dir)
-                    
+
+# get the perception of female vs male respondents for a given question (basically a copy paste of the above but just for these two groups)
+# ideally, would have liked a way to directly do this for every group, but alas
+def plotFemaleVsMale(df_female, df_male, df_answers, question_list, output_list, output_dir): 
+  # plot the graphs for male vs female
+  for q, a in zip(df_answers['Question'], df_answers['Answer']):
+    # separate a (answers column) into a list by the pipe as delimiter
+    answers = a.split('|')
+    # hardcoded labels for this question
+    label1 = 'Female'
+    label2 = 'Male'
+    if q in question_list:
+        # define the output directory and make it if it doesn't exist
+        out_dir = f'{output_dir}/{q}'
+        os.makedirs(out_dir, exist_ok=True)
+        # count the answers for the given question
+        female_counts = countAnswers(df_female, q, answers)
+        male_counts = countAnswers(df_male, q, answers)
+        # get the dataframes for the counts
+        df_female_count = getAnswerCountDf(female_counts, answers)
+        df_male_count = getAnswerCountDf(male_counts, answers)
+        plotComparisonBarGraph(df_female_count, df_male_count, q, label1, label2, group_comparison_color, default_color, out_dir)
+    elif q == 'Q39_':
+        # kind of a gross way for how I was able to write this for question 39s many groupings
+        df_question_female = df_female.filter(regex=q)
+        df_question_male = df_male.filter(regex=q)
+        # hardcoding the list of answers for this question here
+        q39_answers = ['Strongly disagree','Disagree','Neutral','Somewhat agree','Strongly agree','I do not know']
+        # loop through the columns and get the counts for each answer
+        for col in df_question_female.columns:
+            # count the answers for the given question
+            female_counts = df_question_female[col].value_counts()
+            male_counts = df_question_male[col].value_counts()
+            # get the dataframes for the counts
+            df_female_count = getAnswerCountDf(female_counts, q39_answers)
+            df_male_count = getAnswerCountDf(male_counts, q39_answers)
+            # get the number after the '_' in the column name
+            col_num = col.split('_')[1]
+            # get the question from the answer file by the column number
+            question_label = f'{answers[int(col_num)-1]}'
+            label = f'Q39_{question_label}'
+            # define the output directory and make it if it doesn't exist
+            out_dir = f'{output_dir}/{label}'
+            os.makedirs(out_dir, exist_ok=True)
+            plotComparisonBarGraph39(df_female_count, df_male_count, question_label, label1, label2, group_comparison_color, default_color, q39_answers, out_dir)
