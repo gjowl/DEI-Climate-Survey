@@ -266,14 +266,6 @@ if __name__ == '__main__':
     data_file = sys.argv[1] # input data file
     answer_file = sys.argv[2] # answer file (the one in here is self created; in the future, ask for the file of the answers for each question in this format)
 
-import sys, os, pandas as pd, numpy as np, matplotlib.pyplot as plt
-from functions import *
-
-if __name__ == '__main__':
-  # read in the command line options
-  data_file = sys.argv[1]
-  answer_file = sys.argv[2]
-  
   # define the output directory and make it if it doesn't exist
   #output_dir = 'Questions'
   output_dir = 'Questions_Percent'
@@ -320,7 +312,6 @@ if __name__ == '__main__':
   
   # get the data not found within df_students
   rest_of_data = df_data[~df_data.isin(df_students)].dropna()
->>>>>>> 89763c67d1ca04df31e1e44f42b5d58a82b001aa
 
   # plot female vs male graphs
   plotFemaleVsMale(df_female, df_male, df_answers, group_compare_question, output_list, output_dir)
