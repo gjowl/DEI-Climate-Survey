@@ -9,7 +9,7 @@
 @License :   (C)Copyright 2023, Gilbert Loiseau
 @Desc    :   Version of hbarplot for the IPiB survey based on John Ahn's code
 
-Usage: python3 climateSurveyAnalysis.py <data_file> <answer_file>
+Usage: python3 comparisonAnalysis.py <data_file> <answer_file>
 
 This script takes in a csv file with the survey data and a csv file with the questions and answers, and
 outputs a bar plot for each question with the answers on the y axis and the count on the x axis.
@@ -68,7 +68,6 @@ def getAnswerCountDf(answer_counts, answers):
                 answer_counts = pd.concat([answer_counts, pd.Series([0], index=[i+1])])
     # create a new dataframe with the answers and counts
     output_df = pd.DataFrame({'answer': unique_values, 'count': answer_counts.values})
-    
     return output_df 
 
 # plot the bar graph for any percentage based questions
@@ -248,8 +247,8 @@ def analyzeAndPlotComparisonGraphs(df_allData, df_list, df_answers, question_lis
                     # plot the bar graphs
                     plotComparisonBarGraph39(df_count, df_all_count, question_label, output, 'All', group_comparison_color, default_color, q39_answers, out_dir)
                     plotComparisonBarGraph39(df_count, df_rest_count, question_label, output, 'Rest', group_comparison_color, other_color, q39_answers, out_dir)
-                    
 
+# Start main
 if __name__ == '__main__':
     # read in the command line options
     data_file = sys.argv[1] # input data file
